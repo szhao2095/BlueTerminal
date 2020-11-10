@@ -7,10 +7,22 @@ import android.bluetooth.BluetoothDevice;
 public class BLE_Device {
     private BluetoothDevice bluetoothDevice;
     private int rssi;
+    private boolean connection;
+
+    public boolean isConnection() {
+        return connection;
+    }
+
+    public void setConnection(boolean connection) {
+        this.connection = connection;
+    }
+
+
 
     public BLE_Device(BluetoothDevice bluetoothDevice, int rssi){
         this.bluetoothDevice = bluetoothDevice;
         this.rssi = rssi;
+        this.connection = false;
     }
     public int getRssi() {
         return rssi;

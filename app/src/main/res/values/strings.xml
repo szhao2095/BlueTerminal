@@ -4,4 +4,6 @@
     <string name="TurnOff">TURN OFF</string>
     <string name="Scann" />
     <string name="Scan">Scan</string>
+    <string name="submit">SUBMIT</string>
+    <string name="DeviceText">Messages</string>
 </resources>

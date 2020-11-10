@@ -9,10 +9,10 @@
         android:layout_margin="@dimen/cardview_compat_inset_shadow"
         android:layout_height="wrap_content" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/title"
@@ -24,14 +24,40 @@
                 android:text="tile"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+            <TextView
+                android:id="@+id/rssi_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:paddingLeft="14dp"
+                android:paddingTop="5dp"
+                android:text="RSSI:" />
+            <TextView
+                android:id="@+id/rssi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="14dp"
+                android:layout_toRightOf="@id/rssi_title"
+                android:layout_below="@id/title"
 
+                android:paddingTop="5dp"
+                android:text="0" />
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="14dp"
                 android:paddingTop="5dp"
+                android:layout_below="@id/rssi_title"
                 android:text="Description" />
-        </LinearLayout>
+
+            <Button
+                android:id="@+id/deviceConnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

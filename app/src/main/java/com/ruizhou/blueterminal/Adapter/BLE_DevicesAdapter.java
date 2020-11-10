@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,8 +37,19 @@ public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BLE_Device item = listItem.get(position);
-        holder.name.setText(item.getName());
+        if(item.getName() == null){
+            holder.name.setText("No Name");
+        }
+        else{
+            holder.name.setText(item.getName());
+        }
+        holder.rssiStrength.setText(Integer.toString(item.getRssi()));
         holder.description.setText(item.getAddress());
+        if(item.isConnection()){
+            holder.deviceConnection.setText("DISCONNECT");
+        }
+        else holder.deviceConnection.setText("CONNECT");
+
 
     }
 
@@ -50,12 +62,17 @@ public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.
 
         public TextView name;
         public TextView description;
+        public TextView rssiStrength;
+        public Button deviceConnection;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             name = (TextView) itemView.findViewById(R.id.title);
             description=(TextView) itemView.findViewById(R.id.description);
+            rssiStrength=(TextView) itemView.findViewById(R.id.rssi);
+            deviceConnection=(Button) itemView.findViewById(R.id.deviceConnection);
+
 
         }
 
