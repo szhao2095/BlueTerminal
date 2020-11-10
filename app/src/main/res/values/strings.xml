@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BlueTerminal</string>
+    <string name="TurnOn">TURN ON</string>
+    <string name="TurnOff">TURN OFF</string>
+    <string name="Scann" />
+    <string name="Scan">Scan</string>
+</resources>
