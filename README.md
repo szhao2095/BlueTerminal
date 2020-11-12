@@ -1,10 +1,10 @@
 # BlueTerminal
 ## Upcomming Tasks
 ### Bluetooth Low Energy 
-- [x] Architecture Design 
-- [x] BluetoothLE detection
+- [x] Architecture Design 2020/11/09
+- [x] BluetoothLE detection 2020/11/10
 - [ ] BluetoothLE write and its UI
-- [x] BluetoothLE read and its UI (testing UI)
+- [x] BluetoothLE read and its UI (testing UI) - 2020/11/11
 - [ ] Refactor data structures and App structure
 - [ ] Improve UI
 
