@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -16,11 +18,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruizhou.blueterminal.Adapter.BLE_DevicesAdapter;
 import com.ruizhou.blueterminal.Adapter.ListAdapter_BLE_Device;
 import com.ruizhou.blueterminal.Data.BLE_Device;
+import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.util.ArrayList;
@@ -40,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private Button turnOn;
     private Button turnOff;
     private Button scan;
+    private Button testReceive;
+    private TextView testView;
+
     private RecyclerView deviceView;
     private RecyclerView.Adapter deviceAdapter;
     private List<BLE_Device> listItems;
+    private UUID_status uuid_status;
 
 
     private HashMap<String, BLE_Device> mBTDevicesHashMap;
@@ -77,12 +85,18 @@ public class MainActivity extends AppCompatActivity {
         //mBTDevicesArrayList = new ArrayList<>();
         listItems = new ArrayList<>();
         mBTDevicesHashMap = new HashMap<>();
-        deviceAdapter = new BLE_DevicesAdapter(this,listItems);
+        deviceAdapter = new BLE_DevicesAdapter(this,listItems, ble);
         deviceView.setAdapter(deviceAdapter);
 
 
 
-
+        testReceive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ble.readData();
+                testView.setText(ble.response.toString());
+            }
+        });
         //Listener Setting
         turnOn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
         deviceView.setHasFixedSize(true);
         deviceView.setLayoutManager(new LinearLayoutManager(this));
 
+        testReceive = (Button) findViewById(R.id.buttonTest);
+        testView = (TextView) findViewById(R.id.testTextVeiw);
+
     }
     public void addDevice(BluetoothDevice device, int rssi){
        if(device == null){
@@ -155,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
        }
 
     }
+
 
 
 

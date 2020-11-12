@@ -18,6 +18,9 @@ public class BLE_Device {
     }
 
 
+    public BluetoothDevice getBluetoothDevice() {
+        return bluetoothDevice;
+    }
 
     public BLE_Device(BluetoothDevice bluetoothDevice, int rssi){
         this.bluetoothDevice = bluetoothDevice;
