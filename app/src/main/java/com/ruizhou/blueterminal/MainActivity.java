@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Button turnOff;
     private Button scan;
     private Button testReceive;
+    private Button graphData;
     private TextView testView;
 
     private RecyclerView deviceView;
@@ -135,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        graphData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGraph();
+            }
+        });
+
 
 
     }
@@ -144,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         turnOn = (Button) findViewById(R.id.button_main_turnOn);
         turnOff = (Button) findViewById(R.id.button_main_turnOff);
         scan = (Button) findViewById(R.id.button_main_scan);
+        graphData = (Button) findViewById(R.id.button_graph);
         deviceView = (RecyclerView) findViewById(R.id.recyclerView_main);
         deviceView.setHasFixedSize(true);
         deviceView.setLayoutManager(new LinearLayoutManager(this));
@@ -171,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
 
        }
 
+    }
+
+    public void openGraph() {
+       Intent intent = new Intent(this, GraphData.class);
+       startActivity(intent);
     }
 
 
