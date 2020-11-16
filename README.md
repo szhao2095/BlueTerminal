@@ -12,5 +12,6 @@
 - [ ] Architectue 
 - [ ] User Login
 ### Graphing
+![Alt text](Graph.PNG)
 ## Current Status
 <img src="https://github.com/RayZGit/Resources/blob/main/BlueTermial/images/Screenshot_20201112-121710_BlueTerminal.jpg" height="900" width="500">
