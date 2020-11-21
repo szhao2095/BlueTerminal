@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -224,6 +226,48 @@ public class BLE_Service {
             BluetoothGattCharacteristic characteristic=mBluetoothGatt.getService(uuid_status.read_UUID_service)
                     .getCharacteristic(uuid_status.read_UUID_chara);
             mBluetoothGatt.readCharacteristic(characteristic);
+        }
+
+//        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        public void writeData(String content){
+            BluetoothGattService service=mBluetoothGatt.getService(uuid_status.write_UUID_service);
+            BluetoothGattCharacteristic charaWrite=service.getCharacteristic(uuid_status.write_UUID_chara);
+            String hex="7B46363941373237323532443741397D";
+            byte[] data;
+            //String content=testInput.getText().toString();
+            if (!TextUtils.isEmpty(content)){
+                //data=HexUtil.hexStringToBytes(content);
+                data = content.getBytes(StandardCharsets.US_ASCII);
+
+            }else{
+                //data=HexUtil.hexStringToBytes(hex);
+                data = hex.getBytes(StandardCharsets.US_ASCII);
+            }
+            if (data.length>20){//数据大于个字节 分批次写入
+                Log.e(TAG, "writeData: length="+data.length);
+                int num=0;
+                if (data.length%20!=0){
+                    num=data.length/20+1;
+                }else{
+                    num=data.length/20;
+                }
+                for (int i=0;i<num;i++){
+                    byte[] tempArr;
+                    if (i==num-1){
+                        tempArr=new byte[data.length-i*20];
+                        System.arraycopy(data,i*20,tempArr,0,data.length-i*20);
+                    }else{
+                        tempArr=new byte[20];
+                        System.arraycopy(data,i*20,tempArr,0,20);
+                    }
+                    charaWrite.setValue(tempArr);
+                    mBluetoothGatt.writeCharacteristic(charaWrite);
+                }
+            }else{
+                charaWrite.setValue(data);
+                mBluetoothGatt.writeCharacteristic(charaWrite);
+            }
         }
 
     private static final String HEX = "0123456789abcdef";

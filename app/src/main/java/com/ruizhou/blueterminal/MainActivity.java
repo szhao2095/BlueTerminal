@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private Button scan;
     private Button testReceive;
     private Button graphData;
+    private Button sendButton;
     private TextView testView;
+    private EditText textInput;
 
     private RecyclerView deviceView;
     private RecyclerView.Adapter deviceAdapter;
@@ -96,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ble.readData();
                 testView.setText(ble.response.toString());
+            }
+        });
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View view) {
+                String content = textInput.getText().toString();
+                ble.writeData(content);
             }
         });
         //Listener Setting
@@ -159,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
         testReceive = (Button) findViewById(R.id.buttonTest);
         testView = (TextView) findViewById(R.id.testTextVeiw);
+        sendButton = (Button) findViewById(R.id.sendInput);
+        textInput = (EditText)findViewById(R.id.testInput);
 
     }
     public void addDevice(BluetoothDevice device, int rssi){
