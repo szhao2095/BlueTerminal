@@ -22,6 +22,7 @@ import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,7 +231,7 @@ public class BLE_Service {
 
 //        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public void writeData(String content){
+        public void writeData(String content) throws UnsupportedEncodingException {
             BluetoothGattService service=mBluetoothGatt.getService(uuid_status.write_UUID_service);
             BluetoothGattCharacteristic charaWrite=service.getCharacteristic(uuid_status.write_UUID_chara);
             String hex="7B46363941373237323532443741397D";
@@ -238,11 +239,11 @@ public class BLE_Service {
             //String content=testInput.getText().toString();
             if (!TextUtils.isEmpty(content)){
                 //data=HexUtil.hexStringToBytes(content);
-                data = content.getBytes(StandardCharsets.US_ASCII);
+                data = content.getBytes("US-ASCII");
 
             }else{
                 //data=HexUtil.hexStringToBytes(hex);
-                data = hex.getBytes(StandardCharsets.US_ASCII);
+                data = hex.getBytes("US-ASCII");
             }
             if (data.length>20){//数据大于个字节 分批次写入
                 Log.e(TAG, "writeData: length="+data.length);
