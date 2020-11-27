@@ -3,8 +3,11 @@ package com.ruizhou.blueterminal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -21,10 +24,20 @@ import java.io.InputStreamReader;
 
 public class GraphData extends AppCompatActivity {
 
+    private Button displayData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_data);
+
+        displayData = (Button) findViewById(R.id.button_data);
+        displayData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openData();
+            }
+        });
 
         Context context = getApplicationContext();
 
@@ -165,5 +178,9 @@ public class GraphData extends AppCompatActivity {
         GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
         gridLabel.setHorizontalAxisTitle("Time (s)");
         gridLabel.setVerticalAxisTitle("Gas Value (ADC)");
+    }
+    public void openData() {
+        Intent intent = new Intent(this, DisplayData.class);
+        startActivity(intent);
     }
 }
