@@ -90,7 +90,7 @@ public class GraphData extends AppCompatActivity {
 
         // Read the file
         FileInputStream fis = null;
-        String title_name = null;
+        String file_data = null;
 
         try {
             fis = openFileInput(filename);
@@ -103,7 +103,7 @@ public class GraphData extends AppCompatActivity {
                 sb.append(text).append("\n");
             }
 
-            title_name = sb.toString();
+            file_data = sb.toString();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -123,7 +123,7 @@ public class GraphData extends AppCompatActivity {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
 
-        String[] separated = title_name.split("\n");
+        String[] separated = file_data.split("\n");
         for (int i = 0; i < 20; i++) {
             String line = separated[i].trim();
 
