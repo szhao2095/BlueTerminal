@@ -23,7 +23,7 @@ public class DisplayData extends AppCompatActivity {
 //        TextView dataView = (TextView) findViewById(R.id.dataTextView);
 //        dataView.setText(datatext);
 
-        String filename = "test.txt";
+        String filename = "data.txt";
 
         // Read the file
         FileInputStream fis = null;
@@ -57,5 +57,6 @@ public class DisplayData extends AppCompatActivity {
 
         TextView dataView = (TextView) findViewById(R.id.dataTextView);
         dataView.setText(file_data);
+//        System.out.println(file_data);
     }
 }

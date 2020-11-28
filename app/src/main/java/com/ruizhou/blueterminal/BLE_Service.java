@@ -22,11 +22,24 @@ import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class BLE_Service {
 
@@ -58,9 +71,23 @@ public class BLE_Service {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public BLE_Service(Context context, MainActivity mainActivity){
+    public BLE_Service(final Context context, MainActivity mainActivity){
 
         this.context = context;
+
+        final String filename = "data.txt";
+
+        File file = context.getFileStreamPath(filename);
+        if (file.exists()) {
+            context.deleteFile(filename);
+        }
+        try {
+            File.createTempFile(filename, null, context.getCacheDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         ma = mainActivity;
         isConnecting = false;
 
@@ -143,6 +170,26 @@ public class BLE_Service {
                 }
 
                 final String out = output.toString();
+
+
+                FileOutputStream fos = null;
+                try {
+                    fos = context.openFileOutput(filename, context.MODE_APPEND);
+                    fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally { // This code is executed even if exception is thrown
+                    if (fos != null) {
+                        try {
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
