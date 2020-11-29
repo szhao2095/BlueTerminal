@@ -39,54 +39,56 @@ public class GraphData extends AppCompatActivity {
             }
         });
 
-        Context context = getApplicationContext();
+//        Context context = getApplicationContext();
 
-        String filename = "test.txt";
+//        String filename = "test.txt";
+//
+//        try {
+//            File.createTempFile(filename, null, context.getCacheDir());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+////        File cacheFile = new File(context.getCacheDir(), filename);
+//
+//        String fileContents = "0, 280, 6.09\n"
+//                            + "1, 277, 5.91\n"
+//                            + "2, 269, 8.56\n"
+//                            + "3, 255, 6.46\n"
+//                            + "4, 242, 6.50\n"
+//                            + "5, 224, 6.61\n"
+//                            + "6, 214, 6.56\n"
+//                            + "7, 202, 9.31\n"
+//                            + "8, 192, 15.54\n"
+//                            + "9, 181, 10.20\n"
+//                            + "10, 172, 5.39\n"
+//                            + "11, 166, 6.18\n"
+//                            + "12, 159, 6.52\n"
+//                            + "13, 153, 6.27\n"
+//                            + "14, 150, 5.36\n"
+//                            + "15, 145, 5.61\n"
+//                            + "16, 141, 5.67\n"
+//                            + "17, 137, 6.16\n"
+//                            + "18, 134, 5.83\n"
+//                            + "19, 132, 6.87";
+//        FileOutputStream fos = null;
+//        try {
+//            fos = openFileOutput(filename, MODE_PRIVATE);
+//            fos.write(fileContents.getBytes()); // Need to convert string to bytes
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally { // This code is executed even if exception is thrown
+//            if (fos != null) {
+//                try {
+//                    fos.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
-        try {
-            File.createTempFile(filename, null, context.getCacheDir());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        File cacheFile = new File(context.getCacheDir(), filename);
-
-        String fileContents = "0, 280, 6.09\n"
-                            + "1, 277, 5.91\n"
-                            + "2, 269, 8.56\n"
-                            + "3, 255, 6.46\n"
-                            + "4, 242, 6.50\n"
-                            + "5, 224, 6.61\n"
-                            + "6, 214, 6.56\n"
-                            + "7, 202, 9.31\n"
-                            + "8, 192, 15.54\n"
-                            + "9, 181, 10.20\n"
-                            + "10, 172, 5.39\n"
-                            + "11, 166, 6.18\n"
-                            + "12, 159, 6.52\n"
-                            + "13, 153, 6.27\n"
-                            + "14, 150, 5.36\n"
-                            + "15, 145, 5.61\n"
-                            + "16, 141, 5.67\n"
-                            + "17, 137, 6.16\n"
-                            + "18, 134, 5.83\n"
-                            + "19, 132, 6.87";
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput(filename, MODE_PRIVATE);
-            fos.write(fileContents.getBytes()); // Need to convert string to bytes
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally { // This code is executed even if exception is thrown
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        String filename = "data.txt";
 
         // Read the file
         FileInputStream fis = null;
@@ -124,7 +126,7 @@ public class GraphData extends AppCompatActivity {
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
 
         String[] separated = file_data.split("\n");
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < separated.length; i++) {
             String line = separated[i].trim();
 
             String[] sep = line.split(",");
@@ -134,8 +136,8 @@ public class GraphData extends AppCompatActivity {
             int x = Integer.parseInt(sep[0].trim());
             Double g = Double.parseDouble(gas);
             Double d = Double.parseDouble(distance);
-            series.appendData(new DataPoint(x, g), true, 20);
-            series2.appendData(new DataPoint(x, d), true, 20);
+            series.appendData(new DataPoint(x, g), true, separated.length);
+            series2.appendData(new DataPoint(x, d), true, separated.length);
         }
 
         series.setTitle("Gas Value (ADC)");
