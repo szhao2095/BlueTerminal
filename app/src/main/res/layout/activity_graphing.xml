@@ -11,4 +11,15 @@
         android:layout_height="match_parent"
         android:id="@+id/graph" />
 
+<!--    <TextView-->
+<!--        android:id="@+id/notification"-->
+<!--        android:layout_width="362dp"-->
+<!--        android:layout_height="316dp"-->
+<!--        android:layout_marginTop="112dp"-->
+<!--        android:text="Notification"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.489"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
