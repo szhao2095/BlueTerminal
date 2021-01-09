@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Button testReceive;
     private Button graphData;
     private Button sendButton;
+    private Button dumpButton;
     private TextView testView;
     private EditText textInput;
 
@@ -109,6 +110,17 @@ public class MainActivity extends AppCompatActivity {
                 String content = textInput.getText().toString();
                 try {
                     ble.writeData(content);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        dumpButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                try {
+                    ble.writeData("DUMP#");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -176,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         testReceive = (Button) findViewById(R.id.buttonTest);
         testView = (TextView) findViewById(R.id.testTextVeiw);
         sendButton = (Button) findViewById(R.id.sendInput);
+        dumpButton = (Button) findViewById(R.id.dump);
         textInput = (EditText)findViewById(R.id.testInput);
 
     }
