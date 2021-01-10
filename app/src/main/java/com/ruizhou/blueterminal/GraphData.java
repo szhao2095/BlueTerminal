@@ -26,17 +26,20 @@ public class GraphData extends AppCompatActivity {
 
     private Button displayData;
     private Button graphing;
+    private String filename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_data);
 
+        filename = getIntent().getStringExtra("filename");
+
         displayData = (Button) findViewById(R.id.button_data);
         displayData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openData();
+                openData(filename);
             }
         });
 
@@ -44,18 +47,20 @@ public class GraphData extends AppCompatActivity {
         graphing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGraphing();
+                openGraphing(filename);
             }
         });
 
     }
-    public void openData() {
+    public void openData(String filename) {
         Intent intent = new Intent(this, DisplayData.class);
+        intent.putExtra("filename", filename);
         startActivity(intent);
     }
 
-    public void openGraphing() {
+    public void openGraphing(String filename) {
         Intent intent = new Intent(this, Graphing.class);
+        intent.putExtra("filename", filename);
         startActivity(intent);
     }
 }

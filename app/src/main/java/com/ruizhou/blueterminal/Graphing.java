@@ -25,7 +25,7 @@ public class Graphing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphing);
 
-        String filename = "data.txt";
+        String filename = getIntent().getStringExtra("filename");
 
         // Read the file
         FileInputStream fis = null;

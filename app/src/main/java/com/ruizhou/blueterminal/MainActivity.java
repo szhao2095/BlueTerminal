@@ -165,9 +165,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         graphData.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                openGraph();
+                try {
+                    ble.writeData("DUMP#");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String filename = ble.getFileListName();
+                openGraph(filename);
             }
         });
 
@@ -213,8 +220,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openGraph() {
+    public void openGraph(String filename) {
        Intent intent = new Intent(this, GraphData.class);
+       intent.putExtra("filename", filename);
        startActivity(intent);
     }
 
