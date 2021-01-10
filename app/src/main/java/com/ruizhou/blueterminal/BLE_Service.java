@@ -58,7 +58,7 @@ public class BLE_Service {
     StringBuilder response;
 
     // FILE SYSTEM MANAGEMENT
-    private String fileListName = "data.txt";
+    private String fileListName;
 
 
 

@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                ble.setFileListName("data.txt");
                 ble.setFile(MainActivity.this); // Delete file if it exists and create new file
                 try {
                     ble.writeData("DUMP#");
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                ble.setFileListName("test.txt");
                 ble.setFile(MainActivity.this); // Delete file if it exists and create new file
                 try {
                     ble.writeData("DUMP#");
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String filename = ble.getFileListName();
-                openGraph(filename);
+                openList(filename);
             }
         });
 
@@ -222,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openGraph(String filename) {
-       Intent intent = new Intent(this, GraphData.class);
+    public void openList(String filename) {
+       Intent intent = new Intent(this, FileList.class);
        intent.putExtra("filename", filename);
        startActivity(intent);
     }
