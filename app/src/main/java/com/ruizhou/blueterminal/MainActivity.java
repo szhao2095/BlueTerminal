@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                ble.setFile(MainActivity.this); // Delete file if it exists and create new file
                 try {
                     ble.writeData("DUMP#");
                 } catch (UnsupportedEncodingException e) {
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                ble.setFile(MainActivity.this); // Delete file if it exists and create new file
                 try {
                     ble.writeData("DUMP#");
                 } catch (UnsupportedEncodingException e) {

@@ -73,17 +73,14 @@ public class BLE_Service {
         return gattCallback;
     }
 
+    // FILE SYSTEM MANAGEMENT
     public String getFileListName() { return fileListName; }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public BLE_Service(final Context context, MainActivity mainActivity){
-
-        this.context = context;
-
-        final String filename = fileListName;
+    public void setFileListName(String newName) {fileListName = newName; }
+    public void setFile(final Context context) {
+        String filename = fileListName;
 
         File file = context.getFileStreamPath(filename);
-        if (file.exists()) {
+        if (file.exists()) { // Delete if file already exists
             context.deleteFile(filename);
         }
         try {
@@ -91,6 +88,24 @@ public class BLE_Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public BLE_Service(final Context context, MainActivity mainActivity){
+
+        this.context = context;
+
+//        final String filename = fileListName;
+//
+//        File file = context.getFileStreamPath(filename);
+//        if (file.exists()) {
+//            context.deleteFile(filename);
+//        }
+//        try {
+//            File.createTempFile(filename, null, context.getCacheDir());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         ma = mainActivity;
@@ -207,7 +222,7 @@ public class BLE_Service {
                 }
 
                 final String out = output.toString();
-
+                String filename = fileListName;
 
                 FileOutputStream fos = null;
                 try {
