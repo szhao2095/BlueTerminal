@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                String filename = ble.getFileListName();
+                openList(filename);
             }
         });
         //Listener Setting
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 ble.setFileListName("test.txt");
                 ble.setFile(MainActivity.this); // Delete file if it exists and create new file
                 try {
-                    ble.writeData("DUMP#");
+                    ble.writeData("SEC#");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
