@@ -1,4 +1,4 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -6,11 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,24 +20,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruizhou.blueterminal.Adapter.BLE_DevicesAdapter;
-import com.ruizhou.blueterminal.Adapter.ListAdapter_BLE_Device;
+import com.ruizhou.blueterminal.BLE_Service;
+import com.ruizhou.blueterminal.BroadcastReceiver_BTState;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
+import com.ruizhou.blueterminal.GraphData;
+import com.ruizhou.blueterminal.R;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_ENABLE_BT = 1;
     private final String TAG = "MainActivity_TEST";
 
+    public BLE_Service getBle() {
+        return ble;
+    }
+
     //private BluetoothAdapter ba;
-    private BLE_Service ble;
+    public static BLE_Service ble;
     private AlertDialog.Builder alert;
 
     private Button turnOn;

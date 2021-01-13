@@ -1,6 +1,5 @@
 package com.ruizhou.blueterminal;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -9,15 +8,15 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.ruizhou.blueterminal.Activity.MainActivity;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
@@ -26,22 +25,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-public class BLE_Service {
+public class BLE_Service implements Serializable {
 
     private final String TAG = "BLE_Services";
     private final int SCANPERIOD = 7500;
@@ -55,13 +44,20 @@ public class BLE_Service {
     private BluetoothGattCallback gattCallback;
     private UUID_status uuid_status;
    // private UUID read_UUID_chara;
-    StringBuilder response;
+    public StringBuilder response;
 
 
 
     private boolean mScanning;
     private Handler mHandler;
 
+//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+//    public static synchronized BLE_Service getInstance(final Context context, MainActivity mainActivity) {
+//        if (INSTANCE == null) {
+//            INSTANCE = new BLE_Service( context,mainActivity);
+//        }
+//        return INSTANCE;
+//    }
     public BluetoothAdapter getmBluetoothAdapter() {
         return mBluetoothAdapter;
     }
@@ -305,7 +301,7 @@ public class BLE_Service {
                 //data=HexUtil.hexStringToBytes(hex);
                 data = hex.getBytes("US-ASCII");
             }
-            if (data.length>20){//数据大于个字节 分批次写入
+            if (data.length>20){//Data greater than 20 bytes
                 Log.e(TAG, "writeData: length="+data.length);
                 int num=0;
                 if (data.length%20!=0){

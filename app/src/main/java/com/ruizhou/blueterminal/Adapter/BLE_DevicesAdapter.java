@@ -1,8 +1,8 @@
 package com.ruizhou.blueterminal.Adapter;
 
-import android.app.LauncherActivity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ruizhou.blueterminal.Activity.DetailActivity;
 import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.Data.BLE_Device;
-import com.ruizhou.blueterminal.MainActivity;
+import com.ruizhou.blueterminal.GraphData;
 import com.ruizhou.blueterminal.R;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
@@ -122,6 +123,10 @@ public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.
 
             Utils_functions.toast(context,"currently detail unavaliable");
             //TODO：Adding detail device activity
+            Intent intent = new Intent(context, DetailActivity.class);
+//            intent.putExtra("BLE",ble);
+            context.startActivity(intent);
+
 
 
         }
