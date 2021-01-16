@@ -98,17 +98,7 @@ public class BLE_Service implements Serializable {
 
         this.context = context;
 
-//        final String filename = fileListName;
-//
-//        File file = context.getFileStreamPath(filename);
-//        if (file.exists()) {
-//            context.deleteFile(filename);
-//        }
-//        try {
-//            File.createTempFile(filename, null, context.getCacheDir());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
 
 
         ma = mainActivity;
@@ -168,38 +158,7 @@ public class BLE_Service implements Serializable {
                 //Log.d(TAG,"onCharacteristicRead()");
                 Log.d(TAG, "callBack characteristic read status: "+ status +" in thread" + Thread.currentThread());
                 Log.d(TAG,"read value "+ characteristic.getValue());
-//                final byte[] data=characteristic.getValue();
-//                String hex = bytes2hex(data);
-//                StringBuilder output = new StringBuilder();
-//                for (int i = 0; i < hex.length(); i = i + 2) {
-//                    // Step-1 Split the hex string into two character group
-//                    String s = hex.substring(i, i + 2);
-//                    // Step-2 Convert the each character group into integer using valueOf method
-//                    int n = Integer.valueOf(s, 16);
-//                    // Step-3 Cast the integer value to char
-//                    output.append((char)n);
-//                }
-//
-//                final String out = output.toString();
-//
-//
-//                FileOutputStream fos = null;
-//                try {
-//                    fos = context.openFileOutput(filename, context.MODE_APPEND);
-//                    fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally { // This code is executed even if exception is thrown
-//                    if (fos != null) {
-//                        try {
-//                            fos.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
+
             }
 
             @Override

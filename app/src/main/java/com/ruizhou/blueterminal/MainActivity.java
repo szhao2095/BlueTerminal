@@ -172,6 +172,13 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+//                ble.setFileListName("filelist.txt");
+//                ble.setFile(context); // Delete file if it exists and create new file
+//                try {
+//                    ble.writeData("NAMES#");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
                 openList("test.txt");
             }
         });

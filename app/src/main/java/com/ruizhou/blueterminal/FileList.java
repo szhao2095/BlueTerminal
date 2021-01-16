@@ -34,8 +34,8 @@ public class FileList extends AppCompatActivity {
         context = MainActivity.context;
 
 //        filename1 = getIntent().getStringExtra("filename");
-        filename1 = "data.txt";
-        filename2 = "test.txt";
+        filename1 = "dfile3.txt";
+        filename2 = "dfile2.txt";
 
         file1 = (Button) findViewById(R.id.button_file_data);
         file1.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +45,8 @@ public class FileList extends AppCompatActivity {
                 ble.setFileListName(filename1);
                 ble.setFile(context); // Delete file if it exists and create new file
                 try {
-                    ble.writeData("DUMP#");
+                    String command = filename1 + "#";
+                    ble.writeData(command);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -62,7 +63,8 @@ public class FileList extends AppCompatActivity {
                 ble.setFileListName(filename2);
                 ble.setFile(context); // Delete file if it exists and create new file
                 try {
-                    ble.writeData("SEC#");
+                    String command = filename2 + "#";
+                    ble.writeData(command);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
