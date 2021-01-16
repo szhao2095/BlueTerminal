@@ -15,9 +15,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import com.ruizhou.blueterminal.MainActivity;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
@@ -32,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.io.Serializable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BLE_Service {
+public class BLE_Service implements Serializable {
 
     private final String TAG = "BLE_Services";
     private final int SCANPERIOD = 7500;
@@ -55,7 +58,7 @@ public class BLE_Service {
     private BluetoothGattCallback gattCallback;
     private UUID_status uuid_status;
    // private UUID read_UUID_chara;
-    StringBuilder response;
+    public StringBuilder response;
 
     // FILE SYSTEM MANAGEMENT
     private String fileListName;

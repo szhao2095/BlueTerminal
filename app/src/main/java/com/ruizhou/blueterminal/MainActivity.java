@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -39,8 +40,13 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ENABLE_BT = 1;
     private final String TAG = "MainActivity_TEST";
 
+    public BLE_Service getBle() {
+        return ble;
+    }
+
     //private BluetoothAdapter ba;
-    private BLE_Service ble;
+    public static BLE_Service ble;
+    public static Context context;
     private AlertDialog.Builder alert;
 
     private Button turnOn;
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
        // ba = BluetoothAdapter.getDefaultAdapter();
         ble = new BLE_Service(MainActivity.this, this);
         alert = new AlertDialog.Builder(MainActivity.this);
+        context = MainActivity.this;
 
         //UI setup
         UIsetup();
@@ -119,15 +126,8 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ble.setFileListName("data.txt");
-                ble.setFile(MainActivity.this); // Delete file if it exists and create new file
-                try {
-                    ble.writeData("DUMP#");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                String filename = ble.getFileListName();
-                openList(filename);
+
+                openList("data.txt");
             }
         });
         //Listener Setting
@@ -172,15 +172,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ble.setFileListName("test.txt");
-                ble.setFile(MainActivity.this); // Delete file if it exists and create new file
-                try {
-                    ble.writeData("SEC#");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                String filename = ble.getFileListName();
-                openList(filename);
+                openList("test.txt");
             }
         });
 
