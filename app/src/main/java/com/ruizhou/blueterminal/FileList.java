@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -95,6 +96,10 @@ public class FileList extends AppCompatActivity {
         filename2 = separated[1];
 //        filename1 = nameList.get(0);
 //        filename2 = nameList.get(1);
+        TextView dataView = (TextView) findViewById(R.id.button_file_name);
+        dataView.setText(filename1);
+        TextView dataView2 = (TextView) findViewById(R.id.button_file_name2);
+        dataView2.setText(filename2);
 
         file1 = (Button) findViewById(R.id.button_file_data);
         file1.setOnClickListener(new View.OnClickListener() {
