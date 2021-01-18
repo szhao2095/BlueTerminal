@@ -62,6 +62,9 @@ public class BLE_Service implements Serializable {
 
     // FILE SYSTEM MANAGEMENT
     private String fileListName;
+    public String anchorName = "filelist.txt";
+    public String anchorPath = "DEADBEEF";
+    public File anchorFile;
 
 
 
@@ -97,6 +100,12 @@ public class BLE_Service implements Serializable {
     public BLE_Service(final Context context, MainActivity mainActivity){
 
         this.context = context;
+        try {
+            anchorFile = File.createTempFile(anchorName, null, context.getCacheDir());
+            anchorPath = anchorFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -188,19 +197,41 @@ public class BLE_Service implements Serializable {
                 String filename = fileListName;
 
                 FileOutputStream fos = null;
-                try {
-                    fos = context.openFileOutput(filename, context.MODE_APPEND);
-                    fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally { // This code is executed even if exception is thrown
-                    if (fos != null) {
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+
+                if (filename.equals(anchorName)) {
+                    try {
+                        fos = new FileOutputStream(anchorFile, true);
+                        fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally { // This code is executed even if exception is thrown
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                } else {
+
+                    try {
+                        fos = context.openFileOutput(filename, context.MODE_APPEND);
+                        fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally { // This code is executed even if exception is thrown
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

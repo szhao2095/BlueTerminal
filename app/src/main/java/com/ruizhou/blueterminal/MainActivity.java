@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ble.setFileListName("filelist.txt");
-                ble.setFile(context); // Delete file if it exists and create new file
+                ble.setFileListName(ble.anchorName);
+//                ble.setFile(context); // Delete file if it exists and create new file
                 try {
                     ble.writeData("NAMES#");
                 } catch (UnsupportedEncodingException e) {

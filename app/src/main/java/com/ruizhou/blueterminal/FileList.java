@@ -12,6 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -39,14 +45,50 @@ public class FileList extends AppCompatActivity {
         read_data = MainActivity.read_data;
 //        nameList = MainActivity.nameList;
 
+//        File anchor = new File(ble.anchorPath);
+        FileInputStream fis = null;
+        String file_data = null;
+        try {
+            fis = new FileInputStream(ble.anchorFile);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+
+            String text;
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+
+            file_data = sb.toString();
+            isr.close();
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+//        // Parse and clean read_data
+//        String[] separated = read_data.split("\n");
+//        for (int i = 0; i < separated.length; i++) {
+//            separated[i] = separated[i].trim();
+//        }
         // Parse and clean read_data
-        String[] separated = read_data.split("\n");
+        String[] separated = file_data.split("\n");
         for (int i = 0; i < separated.length; i++) {
             separated[i] = separated[i].trim();
         }
 
 //        filename1 = getIntent().getStringExtra("filename");
-        Log.d("XAXAXAXAXAXAXA", "read_data: " + read_data);
+        Log.d("XAXAXAXAXAXAXA", "file_data: " + file_data);
 //        filename1 = "dfile3.txt";
 //        filename2 = "dfile2.txt";
         filename1 = separated[0];
