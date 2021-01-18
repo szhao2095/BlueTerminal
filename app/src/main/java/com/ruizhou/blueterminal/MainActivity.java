@@ -30,6 +30,7 @@ import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     //private BluetoothAdapter ba;
     public static BLE_Service ble;
     public static Context context;
+    public static String read_data;
+//    public static ArrayList<String> nameList;
     private AlertDialog.Builder alert;
 
     private Button turnOn;
@@ -92,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         ble = new BLE_Service(MainActivity.this, this);
         alert = new AlertDialog.Builder(MainActivity.this);
         context = MainActivity.this;
+        read_data = "DEADBEEF";
+//        nameList = new ArrayList<String>();
 
         //UI setup
         UIsetup();
@@ -127,7 +132,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                openList("data.txt");
+                ble.setFileListName("filelist.txt");
+                ble.setFile(context); // Delete file if it exists and create new file
+                try {
+                    ble.writeData("NAMES#");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+//                openList("data.txt");
             }
         });
         //Listener Setting
@@ -179,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
 //                } catch (UnsupportedEncodingException e) {
 //                    e.printStackTrace();
 //                }
+                ble.readData();
+                read_data = ble.response.toString();
                 openList("test.txt");
             }
         });
