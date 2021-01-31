@@ -19,11 +19,9 @@ public class DisplayData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_data);
 
-//        String datatext = "Test hello zzzzzzzzzzzzzz";
-//        TextView dataView = (TextView) findViewById(R.id.dataTextView);
-//        dataView.setText(datatext);
 
-        String filename = "data.txt";
+
+        String filename = getIntent().getStringExtra("filename");
 
         // Read the file
         FileInputStream fis = null;

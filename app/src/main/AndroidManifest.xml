@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DisplayData"></activity>
+        <activity android:name=".FileList"></activity>
+        <activity android:name=".Graphing" />
+        <activity android:name=".DisplayData" />
         <activity android:name=".GraphData" />
         <activity android:name=".DeviceDetail" />
         <activity android:name=".MainActivity">

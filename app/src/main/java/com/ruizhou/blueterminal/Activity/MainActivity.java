@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -29,6 +30,7 @@ import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +41,15 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ENABLE_BT = 1;
     private final String TAG = "MainActivity_TEST";
 
+    public BLE_Service getBle() {
+        return ble;
+    }
+
     //private BluetoothAdapter ba;
-    private BLE_Service ble;
+    public static BLE_Service ble;
+    public static Context context;
+    public static String read_data;
+//    public static ArrayList<String> nameList;
     private AlertDialog.Builder alert;
 
     private Button turnOn;
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Button testReceive;
     private Button graphData;
     private Button sendButton;
+    private Button dumpButton;
     private TextView testView;
     private EditText textInput;
 
@@ -84,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
        // ba = BluetoothAdapter.getDefaultAdapter();
         ble = new BLE_Service(MainActivity.this, this);
         alert = new AlertDialog.Builder(MainActivity.this);
+        context = MainActivity.this;
+        read_data = "DEADBEEF";
+//        nameList = new ArrayList<String>();
 
         //UI setup
         UIsetup();
@@ -112,6 +125,21 @@ public class MainActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        dumpButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+
+                ble.setFileListName(ble.anchorName);
+//                ble.setFile(context); // Delete file if it exists and create new file
+                try {
+                    ble.writeData("NAMES#");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+//                openList("data.txt");
             }
         });
         //Listener Setting
@@ -153,9 +181,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         graphData.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                openGraph();
+//                ble.setFileListName("filelist.txt");
+//                ble.setFile(context); // Delete file if it exists and create new file
+//                try {
+//                    ble.writeData("NAMES#");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+                ble.readData();
+                read_data = ble.response.toString();
+                openList("test.txt");
             }
         });
 
@@ -176,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
         testReceive = (Button) findViewById(R.id.buttonTest);
         testView = (TextView) findViewById(R.id.testTextVeiw);
         sendButton = (Button) findViewById(R.id.sendInput);
+        dumpButton = (Button) findViewById(R.id.dump);
         textInput = (EditText)findViewById(R.id.testInput);
 
     }
@@ -200,8 +239,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openGraph() {
-       Intent intent = new Intent(this, GraphData.class);
+    public void openList(String filename) {
+       Intent intent = new Intent(this, FileList.class);
+       intent.putExtra("filename", filename);
        startActivity(intent);
     }
 

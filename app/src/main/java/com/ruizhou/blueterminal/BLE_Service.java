@@ -15,9 +15,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import com.ruizhou.blueterminal.MainActivity;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
@@ -32,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.io.Serializable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BLE_Service {
+public class BLE_Service implements Serializable {
 
     private final String TAG = "BLE_Services";
     private final int SCANPERIOD = 7500;
@@ -55,7 +58,13 @@ public class BLE_Service {
     private BluetoothGattCallback gattCallback;
     private UUID_status uuid_status;
    // private UUID read_UUID_chara;
-    StringBuilder response;
+    public StringBuilder response;
+
+    // FILE SYSTEM MANAGEMENT
+    private String fileListName;
+    public String anchorName = "filelist.txt";
+    public String anchorPath = "DEADBEEF";
+    public File anchorFile;
 
 
 
@@ -70,15 +79,14 @@ public class BLE_Service {
         return gattCallback;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public BLE_Service(final Context context, MainActivity mainActivity){
-
-        this.context = context;
-
-        final String filename = "data.txt";
+    // FILE SYSTEM MANAGEMENT
+    public String getFileListName() { return fileListName; }
+    public void setFileListName(String newName) {fileListName = newName; }
+    public void setFile(final Context context) {
+        String filename = fileListName;
 
         File file = context.getFileStreamPath(filename);
-        if (file.exists()) {
+        if (file.exists()) { // Delete if file already exists
             context.deleteFile(filename);
         }
         try {
@@ -86,6 +94,20 @@ public class BLE_Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public BLE_Service(final Context context, MainActivity mainActivity){
+
+        this.context = context;
+        try {
+            anchorFile = File.createTempFile(anchorName, null, context.getCacheDir());
+            anchorPath = anchorFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         ma = mainActivity;
@@ -145,6 +167,7 @@ public class BLE_Service {
                 //Log.d(TAG,"onCharacteristicRead()");
                 Log.d(TAG, "callBack characteristic read status: "+ status +" in thread" + Thread.currentThread());
                 Log.d(TAG,"read value "+ characteristic.getValue());
+
             }
 
             @Override
@@ -161,31 +184,54 @@ public class BLE_Service {
                 String hex = bytes2hex(data);
                 StringBuilder output = new StringBuilder();
                 for (int i = 0; i < hex.length(); i = i + 2) {
-                    // Step-1 Split the hex string into two character group
                     String s = hex.substring(i, i + 2);
-                    // Step-2 Convert the each character group into integer using valueOf method
                     int n = Integer.valueOf(s, 16);
-                    // Step-3 Cast the integer value to char
                     output.append((char)n);
                 }
 
                 final String out = output.toString();
 
+//                ArrayList<String> nameList = MainActivity.nameList;
+                Log.d("XAXAXAXAXAXAXA", "out: " + out);
+//                MainActivity.nameList.add(out);
+                String filename = fileListName;
 
                 FileOutputStream fos = null;
-                try {
-                    fos = context.openFileOutput(filename, context.MODE_APPEND);
-                    fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally { // This code is executed even if exception is thrown
-                    if (fos != null) {
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+
+                if (filename.equals(anchorName)) {
+                    try {
+                        fos = new FileOutputStream(anchorFile, true);
+                        fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally { // This code is executed even if exception is thrown
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                } else {
+
+                    try {
+                        fos = context.openFileOutput(filename, context.MODE_APPEND);
+                        fos.write(out.getBytes(), 0, out.length()); // Need to convert string to bytes
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally { // This code is executed even if exception is thrown
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -337,9 +383,8 @@ public class BLE_Service {
         StringBuilder sb = new StringBuilder(bytes.length * 2);
         for (byte b : bytes)
         {
-            // 取出这个字节的高4位，然后与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数
+
             sb.append(HEX.charAt((b >> 4) & 0x0f));
-            // 取出这个字节的低位，与0x0f与运算，得到一个0-15之间的数据，通过HEX.charAt(0-15)即为16进制数
             sb.append(HEX.charAt(b & 0x0f));
         }
         return sb.toString();

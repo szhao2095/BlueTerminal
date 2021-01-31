@@ -2,9 +2,10 @@ package com.ruizhou.blueterminal.Data;
 
 import android.bluetooth.BluetoothDevice;
 
+import java.io.Serializable;
 
 //Wrapper class for bluetooth devices
-public class BLE_Device {
+public class BLE_Device implements Serializable {
     private BluetoothDevice bluetoothDevice;
     private int rssi;
     private boolean connection;
