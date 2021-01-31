@@ -1,4 +1,4 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Data;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;

@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ruizhou.blueterminal.Activity.MainActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

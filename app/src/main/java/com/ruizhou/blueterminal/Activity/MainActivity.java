@@ -1,4 +1,4 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
 import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -24,17 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruizhou.blueterminal.Adapter.BLE_DevicesAdapter;
-import com.ruizhou.blueterminal.Adapter.ListAdapter_BLE_Device;
+import com.ruizhou.blueterminal.BLE_Service;
+import com.ruizhou.blueterminal.Data.BroadcastReceiver_BTState;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
+import com.ruizhou.blueterminal.FileList;
+import com.ruizhou.blueterminal.R;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     //private BluetoothAdapter ba;
     public static BLE_Service ble;
+
     public static Context context;
     public static String read_data;
 //    public static ArrayList<String> nameList;

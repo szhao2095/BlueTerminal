@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 //Wrapper class for bluetooth devices
 public class BLE_Device implements Serializable {
+
     private BluetoothDevice bluetoothDevice;
     private int rssi;
     private boolean connection;

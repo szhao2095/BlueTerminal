@@ -1,5 +1,6 @@
 package com.ruizhou.blueterminal.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 import java.io.Serializable;
 

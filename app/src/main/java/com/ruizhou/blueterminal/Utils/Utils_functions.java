@@ -6,8 +6,6 @@ package com.ruizhou.blueterminal.Utils;
         import android.content.Intent;
         import android.widget.Toast;
 
-        import com.ruizhou.blueterminal.MainActivity;
-
 public class Utils_functions {
     public static boolean checkBluetooth(BluetoothAdapter bluetoothAdapter){
         if(bluetoothAdapter == null || !bluetoothAdapter.isEnabled()){
