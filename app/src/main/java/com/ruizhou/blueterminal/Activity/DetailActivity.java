@@ -57,15 +57,11 @@ public class DetailActivity extends AppCompatActivity {
         });
 
     }
-
     private void setUpUI(){
         responseView = (TextView)findViewById(R.id.resultView);
         cmdView = (EditText)findViewById(R.id.cmdInput);
         submitBut = (Button)findViewById(R.id.submitBut);
         graphBut = (Button)findViewById(R.id.graphBut);
         receiveBut = (Button)findViewById(R.id.receiveBut);
-
-
-
     }
 }

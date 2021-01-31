@@ -45,9 +45,6 @@ public class BLE_Service implements Serializable {
     private UUID_status uuid_status;
    // private UUID read_UUID_chara;
     public StringBuilder response;
-
-
-
     private boolean mScanning;
     private Handler mHandler;
 
