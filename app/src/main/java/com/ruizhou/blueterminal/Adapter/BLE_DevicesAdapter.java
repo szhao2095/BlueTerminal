@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ruizhou.blueterminal.Activity.DetailActivity;
 import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.Data.BLE_Device;
-import com.ruizhou.blueterminal.GraphData;
 import com.ruizhou.blueterminal.R;
-import com.ruizhou.blueterminal.Utils.Utils_functions;
 
 import java.util.List;
 

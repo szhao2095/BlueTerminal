@@ -26,7 +26,6 @@ import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.Data.BroadcastReceiver_BTState;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.Data.UUID_status;
-import com.ruizhou.blueterminal.FileList;
 import com.ruizhou.blueterminal.R;
 import com.ruizhou.blueterminal.Utils.Utils_functions;
 
@@ -55,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private Button turnOn;
     private Button turnOff;
     private Button scan;
-    private Button testReceive;
-    private Button graphData;
-    private Button sendButton;
-    private Button dumpButton;
-    private TextView testView;
-    private EditText textInput;
 
     private RecyclerView deviceView;
     private RecyclerView.Adapter deviceAdapter;
@@ -107,41 +100,6 @@ public class MainActivity extends AppCompatActivity {
         deviceView.setAdapter(deviceAdapter);
 
 
-
-        testReceive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ble.readData();
-                testView.setText(ble.response.toString());
-            }
-        });
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View view) {
-                String content = textInput.getText().toString();
-                try {
-                    ble.writeData(content);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        dumpButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-
-                ble.setFileListName(ble.anchorName);
-//                ble.setFile(context); // Delete file if it exists and create new file
-                try {
-                    ble.writeData("NAMES#");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-//                openList("data.txt");
-            }
-        });
         //Listener Setting
         turnOn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,23 +138,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        graphData.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-//                ble.setFileListName("filelist.txt");
-//                ble.setFile(context); // Delete file if it exists and create new file
-//                try {
-//                    ble.writeData("NAMES#");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-                ble.readData();
-                read_data = ble.response.toString();
-                openList("test.txt");
-            }
-        });
-
 
 
     }
@@ -206,17 +147,9 @@ public class MainActivity extends AppCompatActivity {
         turnOn = (Button) findViewById(R.id.button_main_turnOn);
         turnOff = (Button) findViewById(R.id.button_main_turnOff);
         scan = (Button) findViewById(R.id.button_main_scan);
-        graphData = (Button) findViewById(R.id.button_graph);
         deviceView = (RecyclerView) findViewById(R.id.recyclerView_main);
         deviceView.setHasFixedSize(true);
         deviceView.setLayoutManager(new LinearLayoutManager(this));
-
-        testReceive = (Button) findViewById(R.id.buttonTest);
-        testView = (TextView) findViewById(R.id.testTextVeiw);
-        sendButton = (Button) findViewById(R.id.sendInput);
-        dumpButton = (Button) findViewById(R.id.dump);
-        textInput = (EditText)findViewById(R.id.testInput);
-
     }
     public void addDevice(BluetoothDevice device, int rssi){
        if(device == null){
@@ -237,12 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
        }
 
-    }
-
-    public void openList(String filename) {
-       Intent intent = new Intent(this, FileList.class);
-       intent.putExtra("filename", filename);
-       startActivity(intent);
     }
 
 

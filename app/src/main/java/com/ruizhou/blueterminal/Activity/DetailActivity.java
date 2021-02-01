@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ruizhou.blueterminal.BLE_Service;
-import com.ruizhou.blueterminal.FileList;
 import com.ruizhou.blueterminal.R;
 
 import java.io.UnsupportedEncodingException;

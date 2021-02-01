@@ -1,4 +1,4 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.ruizhou.blueterminal.R;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

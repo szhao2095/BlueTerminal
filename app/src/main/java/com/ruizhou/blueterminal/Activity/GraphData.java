@@ -1,26 +1,15 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.ruizhou.blueterminal.Activity.DisplayData;
+import com.ruizhou.blueterminal.Activity.Graphing;
+import com.ruizhou.blueterminal.R;
 
 public class GraphData extends AppCompatActivity {
 

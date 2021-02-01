@@ -1,9 +1,11 @@
-package com.ruizhou.blueterminal;
+package com.ruizhou.blueterminal.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.ruizhou.blueterminal.R;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
