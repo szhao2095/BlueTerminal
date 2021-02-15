@@ -18,13 +18,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.FileList"></activity>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.FileList" />
         <activity android:name=".Activity.Graphing" />
-        <activity android:name=".Activity.DetailActivity"></activity>
+        <activity android:name=".Activity.DetailActivity" />
         <activity android:name=".Activity.DisplayData" />
         <activity android:name=".Activity.GraphData" />
         <activity android:name=".DeviceDetail" />
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".Activity.userAuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

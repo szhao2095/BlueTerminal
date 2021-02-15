@@ -1,5 +1,6 @@
 package com.ruizhou.blueterminal.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.R;
 
@@ -29,6 +34,11 @@ public class DetailActivity extends AppCompatActivity {
     private Button dumpBut;
 
     private BLE_Service ble;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,24 @@ public class DetailActivity extends AppCompatActivity {
         setUpUI();
         responseView.setMovementMethod(new ScrollingMovementMethod());
         ble = MainActivity.ble;
+
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if(user != null){
+                    // user is signed in
+                }else{
+                    //user is signed out
+                    
+                }
+            }
+        };
 
         submitBut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -106,5 +134,19 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FileList.class);
         intent.putExtra("filename", filename);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }
