@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -44,10 +45,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //private BluetoothAdapter ba;
+    @SuppressLint("StaticFieldLeak")
     public static BLE_Service ble;
 
+    @SuppressLint("StaticFieldLeak")
     public static Context context;
     public static String read_data;
+    public static HashMap<String, Integer> cachedFiles;
 //    public static ArrayList<String> nameList;
     private AlertDialog.Builder alert;
 
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         alert = new AlertDialog.Builder(MainActivity.this);
         context = MainActivity.this;
         read_data = "DEADBEEF";
+        cachedFiles = new HashMap<String, Integer>();
 //        nameList = new ArrayList<String>();
 
         //UI setup

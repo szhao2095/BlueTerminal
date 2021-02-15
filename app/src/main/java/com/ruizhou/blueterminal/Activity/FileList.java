@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 public class FileList extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class FileList extends AppCompatActivity {
     private BLE_Service ble;
     private Context context;
     private String read_data;
+    private HashMap<String, Integer> cachedFiles;
 //    private ArrayList<String> nameList;
 
     @Override
@@ -44,6 +46,7 @@ public class FileList extends AppCompatActivity {
         ble = MainActivity.ble;
         context = MainActivity.context;
         read_data = MainActivity.read_data;
+        cachedFiles = MainActivity.cachedFiles;
 //        nameList = MainActivity.nameList;
 
 //        File anchor = new File(ble.anchorPath);
@@ -106,13 +109,18 @@ public class FileList extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ble.setFileListName(filename1);
-                ble.setFile(context); // Delete file if it exists and create new file
-                try {
-                    String command = filename1 + "#";
-                    ble.writeData(command);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                // If file is not cached, create file and insert filename into hashmap
+                if (!cachedFiles.containsKey(filename1)) {
+                    ble.setFileListName(filename1);
+                    ble.setFile(context); // Delete file if it exists and create new file
+                    try {
+                        String command = filename1 + "#";
+                        ble.writeData(command);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    // Insert into hashmap
+                    cachedFiles.put(filename1, 1);
                 }
                 openFileData(filename1);
 
@@ -124,13 +132,18 @@ public class FileList extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ble.setFileListName(filename2);
-                ble.setFile(context); // Delete file if it exists and create new file
-                try {
-                    String command = filename2 + "#";
-                    ble.writeData(command);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                // If file is not cached, create file and insert filename into hashmap
+                if (!cachedFiles.containsKey(filename2)) {
+                    ble.setFileListName(filename2);
+                    ble.setFile(context); // Delete file if it exists and create new file
+                    try {
+                        String command = filename2 + "#";
+                        ble.writeData(command);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    // Insert into hashmap
+                    cachedFiles.put(filename2, 1);
                 }
                 openFileData(filename2);
 
