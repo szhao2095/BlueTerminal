@@ -25,6 +25,8 @@ import java.util.HashMap;
 
 public class FileList extends AppCompatActivity {
 
+    private Button dump;
+
     private Button file1;
     private String filename1;
 
@@ -35,7 +37,8 @@ public class FileList extends AppCompatActivity {
     private Context context;
     private String read_data;
     private HashMap<String, Integer> cachedFiles;
-//    private ArrayList<String> nameList;
+    private String[] file_names;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +50,7 @@ public class FileList extends AppCompatActivity {
         context = MainActivity.context;
         read_data = MainActivity.read_data;
         cachedFiles = MainActivity.cachedFiles;
-//        nameList = MainActivity.nameList;
 
-//        File anchor = new File(ble.anchorPath);
         FileInputStream fis = null;
         String file_data = null;
         try {
@@ -80,29 +81,53 @@ public class FileList extends AppCompatActivity {
             }
         }
 
-//        // Parse and clean read_data
-//        String[] separated = read_data.split("\n");
-//        for (int i = 0; i < separated.length; i++) {
-//            separated[i] = separated[i].trim();
-//        }
+
         // Parse and clean read_data
-        String[] separated = file_data.split("\n");
-        for (int i = 0; i < separated.length; i++) {
-            separated[i] = separated[i].trim();
+        file_names = file_data.split("\n");
+        for (int i = 0; i < file_names.length; i++) {
+            file_names[i] = file_names[i].trim();
         }
+
+
 
 //        filename1 = getIntent().getStringExtra("filename");
         Log.d("XAXAXAXAXAXAXA", "file_data: " + file_data);
 //        filename1 = "dfile3.txt";
 //        filename2 = "dfile2.txt";
-        filename1 = separated[0];
-        filename2 = separated[1];
+        filename1 = file_names[0];
+        filename2 = file_names[1];
 //        filename1 = nameList.get(0);
 //        filename2 = nameList.get(1);
         TextView dataView = (TextView) findViewById(R.id.button_file_name);
         dataView.setText(filename1);
         TextView dataView2 = (TextView) findViewById(R.id.button_file_name2);
         dataView2.setText(filename2);
+
+        dump = (Button) findViewById(R.id.button_file_dump);
+        dump.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < file_names.length; i++) {
+                    String filename = file_names[i];
+                    Log.d("FILENAMEEEE", "filename: " + filename);
+                    // If file is not cached, create file and insert filename into hashmap
+                    if (!cachedFiles.containsKey(filename)) {
+                        ble.setFileListName(filename);
+                        ble.setFile(context); // Delete file if it exists and create new file
+                        try {
+                            String command = filename + "#";
+                            Log.d("COMMANDDDD", "command: " + command);
+                            ble.writeData(command);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        // Insert into hashmap
+                        cachedFiles.put(filename, 1);
+                    }
+                }
+            }
+        });
 
         file1 = (Button) findViewById(R.id.button_file_data);
         file1.setOnClickListener(new View.OnClickListener() {
