@@ -60,26 +60,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         app:layout_constraintVertical_bias="0.009" />
 
-    <Button
-        android:id="@+id/graphBut"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="108dp"
-        android:text="Graph"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:layout_constraintVertical_bias="0.183" />
+<!--    <Button-->
+<!--        android:id="@+id/graphBut"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="54dp"-->
+<!--        android:layout_marginTop="108dp"-->
+<!--        android:text="Graph"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.183" />-->
 
     <Button
         android:id="@+id/dump"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:text="DUMP"
-        app:layout_constraintBottom_toTopOf="@+id/graphBut"
+        android:layout_marginTop="76dp"
+        android:text="VIEW ARDUINO FILES"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         app:layout_constraintVertical_bias="1.0" />

@@ -21,6 +21,7 @@ import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.R;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView responseView;
     private EditText cmdView;
     private Button submitBut;
-    private Button graphBut;
+//    private Button graphBut;
     private Button receiveBut;
     private Button dumpBut;
 
@@ -40,6 +41,8 @@ public class DetailActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
+    private HashMap<String, Integer> cachedFiles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,6 @@ public class DetailActivity extends AppCompatActivity {
         setUpUI();
         responseView.setMovementMethod(new ScrollingMovementMethod());
         ble = MainActivity.ble;
-
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -65,6 +67,9 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         };
+
+        cachedFiles = MainActivity.cachedFiles;
+
 
         submitBut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -88,34 +93,46 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        graphBut.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-//                ble.setFileListName("filelist.txt");
-//                ble.setFile(context); // Delete file if it exists and create new file
-//                try {
-//                    ble.writeData("NAMES#");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-                ble.readData();
-                read_data = ble.response.toString();
-                openList("test.txt");
-            }
-        });
+//        graphBut.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onClick(View v) {
+////                ble.setFileListName("filelist.txt");
+////                ble.setFile(context); // Delete file if it exists and create new file
+////                try {
+////                    ble.writeData("NAMES#");
+////                } catch (UnsupportedEncodingException e) {
+////                    e.printStackTrace();
+////                }
+//                ble.readData();
+//                read_data = ble.response.toString();
+//                openList("test.txt");
+//            }
+//        });
         dumpBut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                ble.setFileListName(ble.anchorName);
-//                ble.setFile(context); // Delete file if it exists and create new file
-                try {
-                    ble.writeData("NAMES#");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+
+                if (!cachedFiles.containsKey(ble.anchorName)) {
+                    ble.setFileListName(ble.anchorName);
+                    try {
+                        ble.writeData("NAMES#");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Insert into hashmap
+                    cachedFiles.put(ble.anchorName, 1);
+
+                    // Wait for onCharacteristicChanged to finish running
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-//                openList("data.txt");
+                openList("data.txt");
 
             }
         });
@@ -125,7 +142,7 @@ public class DetailActivity extends AppCompatActivity {
         responseView = (TextView)findViewById(R.id.resultView);
         cmdView = (EditText)findViewById(R.id.cmdInput);
         submitBut = (Button)findViewById(R.id.submitBut);
-        graphBut = (Button)findViewById(R.id.graphBut);
+//        graphBut = (Button)findViewById(R.id.graphBut);
         receiveBut = (Button)findViewById(R.id.receiveBut);
         dumpBut = (Button)findViewById(R.id.dump);
     }
