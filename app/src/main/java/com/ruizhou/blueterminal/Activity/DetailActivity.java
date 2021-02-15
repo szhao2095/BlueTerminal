@@ -16,6 +16,7 @@ import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.R;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -30,6 +31,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private BLE_Service ble;
 
+    private HashMap<String, Integer> cachedFiles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,8 @@ public class DetailActivity extends AppCompatActivity {
         setUpUI();
         responseView.setMovementMethod(new ScrollingMovementMethod());
         ble = MainActivity.ble;
+
+        cachedFiles = MainActivity.cachedFiles;
 
         submitBut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -80,19 +85,24 @@ public class DetailActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                ble.setFileListName(ble.anchorName);
-//                ble.setFile(context); // Delete file if it exists and create new file
-                try {
-                    ble.writeData("NAMES#");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
 
-                // Wait for onCharacteristicChanged to finish running
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (!cachedFiles.containsKey(ble.anchorName)) {
+                    ble.setFileListName(ble.anchorName);
+                    try {
+                        ble.writeData("NAMES#");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Insert into hashmap
+                    cachedFiles.put(ble.anchorName, 1);
+
+                    // Wait for onCharacteristicChanged to finish running
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 openList("data.txt");
 

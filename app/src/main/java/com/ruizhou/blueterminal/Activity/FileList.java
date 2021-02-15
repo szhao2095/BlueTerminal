@@ -90,8 +90,10 @@ public class FileList extends AppCompatActivity {
 
 
 
+
+
 //        filename1 = getIntent().getStringExtra("filename");
-        Log.d("XAXAXAXAXAXAXA", "file_data: " + file_data);
+//        Log.d("XAXAXAXAXAXAXA", "file_data: " + file_data);
 //        filename1 = "dfile3.txt";
 //        filename2 = "dfile2.txt";
         filename1 = file_names[0];
