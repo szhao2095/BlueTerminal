@@ -24,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView responseView;
     private EditText cmdView;
     private Button submitBut;
-    private Button graphBut;
+//    private Button graphBut;
     private Button receiveBut;
     private Button dumpBut;
 
@@ -60,22 +60,22 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        graphBut.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-//                ble.setFileListName("filelist.txt");
-//                ble.setFile(context); // Delete file if it exists and create new file
-//                try {
-//                    ble.writeData("NAMES#");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-                ble.readData();
-                read_data = ble.response.toString();
-                openList("test.txt");
-            }
-        });
+//        graphBut.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onClick(View v) {
+////                ble.setFileListName("filelist.txt");
+////                ble.setFile(context); // Delete file if it exists and create new file
+////                try {
+////                    ble.writeData("NAMES#");
+////                } catch (UnsupportedEncodingException e) {
+////                    e.printStackTrace();
+////                }
+//                ble.readData();
+//                read_data = ble.response.toString();
+//                openList("test.txt");
+//            }
+//        });
         dumpBut.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -87,7 +87,14 @@ public class DetailActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-//                openList("data.txt");
+
+                // Wait for onCharacteristicChanged to finish running
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                openList("data.txt");
 
             }
         });
@@ -97,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
         responseView = (TextView)findViewById(R.id.resultView);
         cmdView = (EditText)findViewById(R.id.cmdInput);
         submitBut = (Button)findViewById(R.id.submitBut);
-        graphBut = (Button)findViewById(R.id.graphBut);
+//        graphBut = (Button)findViewById(R.id.graphBut);
         receiveBut = (Button)findViewById(R.id.receiveBut);
         dumpBut = (Button)findViewById(R.id.dump);
     }

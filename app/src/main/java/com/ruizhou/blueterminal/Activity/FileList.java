@@ -124,6 +124,13 @@ public class FileList extends AppCompatActivity {
                         }
                         // Insert into hashmap
                         cachedFiles.put(filename, 1);
+
+                        // Wait for onCharacteristicChanged to finish running
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
