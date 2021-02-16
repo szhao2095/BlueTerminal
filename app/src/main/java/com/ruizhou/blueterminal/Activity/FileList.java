@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ruizhou.blueterminal.BLE_Service;
@@ -27,11 +28,7 @@ public class FileList extends AppCompatActivity {
 
     private Button dump;
 
-    private Button file1;
-    private String filename1;
 
-    private Button file2;
-    private String filename2;
 
     private BLE_Service ble;
     private Context context;
@@ -39,11 +36,15 @@ public class FileList extends AppCompatActivity {
     private HashMap<String, Integer> cachedFiles;
     private String[] file_names;
 
+    private LinearLayout layout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_list);
+
+        layout = findViewById(R.id.linearlayoutid);
 
 
         ble = MainActivity.ble;
@@ -51,6 +52,7 @@ public class FileList extends AppCompatActivity {
         read_data = MainActivity.read_data;
         cachedFiles = MainActivity.cachedFiles;
 
+        // Read filelist.txt file and store file names into file_names list
         FileInputStream fis = null;
         String file_data = null;
         try {
@@ -83,28 +85,45 @@ public class FileList extends AppCompatActivity {
 
 
         // Parse and clean read_data
+        // Create dynamic buttons
         file_names = file_data.split("\n");
         for (int i = 0; i < file_names.length; i++) {
             file_names[i] = file_names[i].trim();
+            final String filename = file_names[i];
+            final Button button = new Button(this);
+//            button.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+            button.setId(i);
+            button.setText(filename);
+            button.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onClick(View v) {
+                    // If file is not cached, create file and insert filename into hashmap
+                    if (!cachedFiles.containsKey(filename)) {
+                        ble.setFileListName(filename);
+                        ble.setFile(context); // Delete file if it exists and create new file
+                        try {
+                            String command = filename + "#";
+                            ble.writeData(command);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        // Insert into hashmap
+                        cachedFiles.put(filename, 1);
+                    }
+                    openFileData(filename);
+                }
+            });
+
+            layout.addView(button);
         }
 
 
 
 
 
-//        filename1 = getIntent().getStringExtra("filename");
-//        Log.d("XAXAXAXAXAXAXA", "file_data: " + file_data);
-//        filename1 = "dfile3.txt";
-//        filename2 = "dfile2.txt";
-        filename1 = file_names[0];
-        filename2 = file_names[1];
-//        filename1 = nameList.get(0);
-//        filename2 = nameList.get(1);
-        TextView dataView = (TextView) findViewById(R.id.button_file_name);
-        dataView.setText(filename1);
-        TextView dataView2 = (TextView) findViewById(R.id.button_file_name2);
-        dataView2.setText(filename2);
 
+        // Dump all files that have not been dumped
         dump = (Button) findViewById(R.id.button_file_dump);
         dump.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -135,52 +154,6 @@ public class FileList extends AppCompatActivity {
                         }
                     }
                 }
-            }
-        });
-
-        file1 = (Button) findViewById(R.id.button_file_data);
-        file1.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                // If file is not cached, create file and insert filename into hashmap
-                if (!cachedFiles.containsKey(filename1)) {
-                    ble.setFileListName(filename1);
-                    ble.setFile(context); // Delete file if it exists and create new file
-                    try {
-                        String command = filename1 + "#";
-                        ble.writeData(command);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    // Insert into hashmap
-                    cachedFiles.put(filename1, 1);
-                }
-                openFileData(filename1);
-
-            }
-        });
-
-        file2 = (Button) findViewById(R.id.button_file_data2);
-        file2.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                // If file is not cached, create file and insert filename into hashmap
-                if (!cachedFiles.containsKey(filename2)) {
-                    ble.setFileListName(filename2);
-                    ble.setFile(context); // Delete file if it exists and create new file
-                    try {
-                        String command = filename2 + "#";
-                        ble.writeData(command);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    // Insert into hashmap
-                    cachedFiles.put(filename2, 1);
-                }
-                openFileData(filename2);
-
             }
         });
     }
