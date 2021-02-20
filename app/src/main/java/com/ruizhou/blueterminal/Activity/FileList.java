@@ -103,7 +103,7 @@ public class FileList extends AppCompatActivity {
                         ble.setFileListName(filename);
                         ble.setFile(context); // Delete file if it exists and create new file
                         try {
-                            String command = filename + "#";
+                            String command = "#DUMP:" + filename + "#";
                             ble.writeData(command);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
@@ -134,10 +134,11 @@ public class FileList extends AppCompatActivity {
                     Log.d("FILENAMEEEE", "filename: " + filename);
                     // If file is not cached, create file and insert filename into hashmap
                     if (!cachedFiles.containsKey(filename)) {
+                        ble.arduinoDoneSending = 0;
                         ble.setFileListName(filename);
                         ble.setFile(context); // Delete file if it exists and create new file
                         try {
-                            String command = filename + "#";
+                            String command = "#DUMP:" + filename + "#";
                             Log.d("COMMANDDDD", "command: " + command);
                             ble.writeData(command);
                         } catch (UnsupportedEncodingException e) {
@@ -147,8 +148,20 @@ public class FileList extends AppCompatActivity {
                         cachedFiles.put(filename, 1);
 
                         // Wait for onCharacteristicChanged to finish running
+//                        try {
+//                            Thread.sleep(30000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+                        while (ble.arduinoDoneSending == 0) { // Sleep while not done
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

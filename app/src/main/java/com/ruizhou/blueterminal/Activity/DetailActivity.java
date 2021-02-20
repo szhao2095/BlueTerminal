@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -117,7 +118,8 @@ public class DetailActivity extends AppCompatActivity {
                 if (!cachedFiles.containsKey(ble.anchorName)) {
                     ble.setFileListName(ble.anchorName);
                     try {
-                        ble.writeData("NAMES#");
+                        Log.d("COMMANDDDD", "command: #LIST:a#");
+                        ble.writeData("#LIST:a#");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }

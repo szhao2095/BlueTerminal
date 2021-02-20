@@ -44,6 +44,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class BLE_Service implements Serializable {
@@ -66,6 +68,7 @@ public class BLE_Service implements Serializable {
     public String anchorName = "filelist.txt";
     public String anchorPath = "DEADBEEF";
     public File anchorFile;
+    public Integer arduinoDoneSending = 1;
 
 
 
@@ -253,6 +256,11 @@ public class BLE_Service implements Serializable {
 
                     }
                 });
+                Pattern endIndicator = Pattern.compile("END");
+                Matcher m = endIndicator.matcher(out);
+                if (m.find()) {
+                    arduinoDoneSending = 1;
+                }
             }
         };
 

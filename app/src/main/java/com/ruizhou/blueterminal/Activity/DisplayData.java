@@ -3,6 +3,7 @@ package com.ruizhou.blueterminal.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import com.ruizhou.blueterminal.R;
@@ -56,6 +57,7 @@ public class DisplayData extends AppCompatActivity {
         }
 
         TextView dataView = (TextView) findViewById(R.id.dataTextView);
+        dataView.setMovementMethod(new ScrollingMovementMethod());
         dataView.setText(file_data);
 //        System.out.println(file_data);
     }
