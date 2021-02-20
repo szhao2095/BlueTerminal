@@ -13,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DisplayData extends AppCompatActivity {
 //    private TextView dataView = (TextView) findViewById(R.id.dataTextView);
@@ -38,6 +40,11 @@ public class DisplayData extends AppCompatActivity {
 
             String text;
             while ((text = br.readLine()) != null) {
+                Pattern endIndicator = Pattern.compile("END");
+                Matcher m = endIndicator.matcher(text);
+                if (m.find()) {
+                    continue;
+                }
                 sb.append(text).append("\n");
             }
 

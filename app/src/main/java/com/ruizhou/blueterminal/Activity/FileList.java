@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Build;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -87,6 +88,7 @@ public class FileList extends AppCompatActivity {
         // Parse and clean read_data
         // Create dynamic buttons
         file_names = file_data.split("\n");
+//        file_names = TextUtils.split(file_data, "\n");
         for (int i = 0; i < file_names.length; i++) {
             file_names[i] = file_names[i].trim();
             final String filename = file_names[i];
