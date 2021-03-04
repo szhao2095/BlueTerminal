@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.io.Serializable;
@@ -69,6 +70,7 @@ public class BLE_Service implements Serializable {
     public String anchorPath = "DEADBEEF";
     public File anchorFile;
     public Integer arduinoDoneSending = 1;
+    public static HashMap<String, String> cachedPaths = new HashMap<String, String>();
 
 
 
@@ -103,6 +105,7 @@ public class BLE_Service implements Serializable {
         }
         try {
             file = File.createTempFile(filename, null, context.getCacheDir());
+            cachedPaths.put(filename, file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -113,6 +113,7 @@ public class FileList extends AppCompatActivity {
                         // Insert into hashmap
                         cachedFiles.put(filename, "foo");
                     }
+                    Log.d("SANITY", "path: " + ble.cachedPaths.get(filename));
                     openFileData(filename);
                 }
             });
