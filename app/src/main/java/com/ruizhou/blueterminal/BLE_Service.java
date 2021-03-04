@@ -102,7 +102,7 @@ public class BLE_Service implements Serializable {
             context.deleteFile(filename);
         }
         try {
-            File.createTempFile(filename, null, context.getCacheDir());
+            file = File.createTempFile(filename, null, context.getCacheDir());
         } catch (IOException e) {
             e.printStackTrace();
         }
