@@ -34,7 +34,7 @@ public class FileList extends AppCompatActivity {
     private BLE_Service ble;
     private Context context;
     private String read_data;
-    private HashMap<String, Integer> cachedFiles;
+    private HashMap<String, String> cachedFiles;
     private String[] file_names;
 
     private LinearLayout layout;
@@ -111,7 +111,7 @@ public class FileList extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         // Insert into hashmap
-                        cachedFiles.put(filename, 1);
+                        cachedFiles.put(filename, "foo");
                     }
                     openFileData(filename);
                 }
@@ -147,7 +147,7 @@ public class FileList extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         // Insert into hashmap
-                        cachedFiles.put(filename, 1);
+                        cachedFiles.put(filename, "foo");
 
                         // Wait for onCharacteristicChanged to finish running
 //                        try {

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static Context context;
     public static String read_data;
-    public static HashMap<String, Integer> cachedFiles;
+    public static HashMap<String, String> cachedFiles;
 //    public static ArrayList<String> nameList;
     private AlertDialog.Builder alert;
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         alert = new AlertDialog.Builder(MainActivity.this);
         context = MainActivity.this;
         read_data = "DEADBEEF";
-        cachedFiles = new HashMap<String, Integer>();
+        cachedFiles = new HashMap<String, String>();
 //        nameList = new ArrayList<String>();
 
         //UI setup

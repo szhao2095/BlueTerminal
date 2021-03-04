@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
-    private HashMap<String, Integer> cachedFiles;
+    private HashMap<String, String> cachedFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +125,7 @@ public class DetailActivity extends AppCompatActivity {
                     }
 
                     // Insert into hashmap
-                    cachedFiles.put(ble.anchorName, 1);
+                    cachedFiles.put(ble.anchorName, "foo");
 
                     // Wait for onCharacteristicChanged to finish running
                     try {
