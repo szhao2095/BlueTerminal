@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,13 +18,18 @@ public class GraphData extends AppCompatActivity {
     private Button graphing;
     private Button upload;
     private String filename;
+    private String filepath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_data);
 
-        filename = getIntent().getStringExtra("filename");
+//        filename = getIntent().getStringExtra("filename");
+        Bundle extras = getIntent().getExtras();
+        filename = extras.getString("filename");
+        filepath = extras.getString("filepath");
+        Log.d("SANITY", "path: " + filepath);
 
         displayData = (Button) findViewById(R.id.button_data);
         displayData.setOnClickListener(new View.OnClickListener() {

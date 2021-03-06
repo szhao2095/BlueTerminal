@@ -176,7 +176,10 @@ public class FileList extends AppCompatActivity {
 
     public void openFileData(String filename) {
         Intent intent = new Intent(this, GraphData.class);
-        intent.putExtra("filename", filename);
+        Bundle extras = new Bundle();
+        extras.putString("filename", filename);
+        extras.putString("filepath", ble.cachedPaths.get(filename));
+        intent.putExtras(extras);
         startActivity(intent);
     }
 }
