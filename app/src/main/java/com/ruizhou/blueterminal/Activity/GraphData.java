@@ -15,6 +15,7 @@ public class GraphData extends AppCompatActivity {
 
     private Button displayData;
     private Button graphing;
+    private Button upload;
     private String filename;
 
     @Override
@@ -37,6 +38,14 @@ public class GraphData extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGraphing(filename);
+            }
+        });
+
+        upload = (Button) findViewById(R.id.button_upload);
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Upload file
             }
         });
 
