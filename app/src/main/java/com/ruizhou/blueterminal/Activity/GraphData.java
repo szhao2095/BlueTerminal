@@ -1,8 +1,11 @@
 package com.ruizhou.blueterminal.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -14,8 +17,10 @@ import com.ruizhou.blueterminal.Activity.Graphing;
 import com.ruizhou.blueterminal.R;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
@@ -96,7 +101,8 @@ public class GraphData extends AppCompatActivity {
                     }
                 }
                 Log.d("SANITYCONTENT", file_data);
-                boolean check = isExternalStorageWritable();
+//                boolean check = isExternalStorageWritable();
+                writeFile(file_data);
             }
         });
 
@@ -120,5 +126,33 @@ public class GraphData extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+    public void writeFile(String file_data) {
+        if (isExternalStorageWritable() && checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            File textFile = new File(Environment.getExternalStorageDirectory(), filename);
+            // Write to external storage file
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(textFile);
+                fos.write(file_data.getBytes(), 0, file_data.length());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally { // This code is executed even if exception is thrown
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean checkPermission(String permission) {
+        int check = ContextCompat.checkSelfPermission(this, permission);
+        return (check == PackageManager.PERMISSION_GRANTED);
     }
 }
