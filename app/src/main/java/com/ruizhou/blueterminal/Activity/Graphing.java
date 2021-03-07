@@ -103,9 +103,9 @@ public class Graphing extends AppCompatActivity {
                     first_x = Long.parseLong(sep[0].trim());
                 }
                 long x = Long.parseLong(sep[0].trim()) - first_x;
-                Log.d("SANITY", "first_x: " + first_x);
-                Log.d("SANITY", "x: " + x);
-                Log.d("SANITY", "i: " + i);
+//                Log.d("SANITY", "first_x: " + first_x);
+//                Log.d("SANITY", "x: " + x);
+//                Log.d("SANITY", "i: " + i);
 
 
                 Double g = Double.parseDouble(gas);

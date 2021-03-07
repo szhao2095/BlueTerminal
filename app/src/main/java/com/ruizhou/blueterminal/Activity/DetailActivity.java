@@ -166,12 +166,12 @@ public class DetailActivity extends AppCompatActivity {
                 }else{
                     Intent fileIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     fileIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                    fileIntent.setType("iamge/*");
+                    fileIntent.setType("image/*");
                     startActivityForResult(fileIntent,FILE_CODE);
                 }
-                Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                fileIntent.setType("file/*");
-                startActivityForResult(fileIntent,FILE_CODE);
+//                Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                fileIntent.setType("file/*");
+//                startActivityForResult(fileIntent,FILE_CODE);
 //                upload();
             }
         });
