@@ -19,6 +19,7 @@ import com.ruizhou.blueterminal.BLE_Service;
 import com.ruizhou.blueterminal.Data.BLE_Device;
 import com.ruizhou.blueterminal.R;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.ViewHolder> {
@@ -93,6 +94,11 @@ public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             ble.mBluetoothGatt = item.getBluetoothDevice().connectGatt(context,
                                     true, ble.getGattCallback(), BluetoothDevice.TRANSPORT_LE);
+                            try {
+                                ble.writeData("~");
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
                         }
                         else{
                             ble.mBluetoothGatt = item.getBluetoothDevice().connectGatt(context,

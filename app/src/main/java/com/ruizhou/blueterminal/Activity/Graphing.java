@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -84,7 +85,13 @@ public class Graphing extends AppCompatActivity {
 
             String[] separated = file_data.split("\n");
 //            String[] separated = TextUtils.split(file_data, "\n");
+            long first_x = 0;
             for (int i = 0; i < separated.length; i++) {
+                // Hard code for demo
+//                if (i == separated.length - 1) {
+//                    continue;
+//                }
+                // END hard code
                 String line = separated[i].trim();
 
                 String[] sep = line.split(",");
@@ -92,7 +99,15 @@ public class Graphing extends AppCompatActivity {
                 String gas = sep[1].trim();
                 String distance = sep[2].trim();
 
-                int x = Integer.parseInt(sep[0].trim());
+                if (i == 0) {
+                    first_x = Long.parseLong(sep[0].trim());
+                }
+                long x = Long.parseLong(sep[0].trim()) - first_x;
+                Log.d("SANITY", "first_x: " + first_x);
+                Log.d("SANITY", "x: " + x);
+                Log.d("SANITY", "i: " + i);
+
+
                 Double g = Double.parseDouble(gas);
                 Double d = Double.parseDouble(distance);
                 series.appendData(new DataPoint(x, g), true, separated.length);

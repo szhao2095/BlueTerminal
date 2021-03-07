@@ -105,7 +105,7 @@ public class FileList extends AppCompatActivity {
                         ble.setFileListName(filename);
                         ble.setFile(context); // Delete file if it exists and create new file
                         try {
-                            String command = "#DUMP:" + filename + "#";
+                            String command = "#DUMP:" + filename + ":123456#";
                             ble.writeData(command);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
@@ -141,7 +141,7 @@ public class FileList extends AppCompatActivity {
                         ble.setFileListName(filename);
                         ble.setFile(context); // Delete file if it exists and create new file
                         try {
-                            String command = "#DUMP:" + filename + "#";
+                            String command = "#DUMP:" + filename + ":123456#";
                             Log.d("COMMANDDDD", "command: " + command);
                             ble.writeData(command);
                         } catch (UnsupportedEncodingException e) {
