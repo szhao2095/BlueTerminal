@@ -161,7 +161,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT < 19) {
                     Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    fileIntent.setType("file/*");
+                    fileIntent.setType("text/*");
                     startActivityForResult(fileIntent,FILE_CODE);
                 }else{
                     Intent fileIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
