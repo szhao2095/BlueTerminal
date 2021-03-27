@@ -33,6 +33,7 @@ public class GraphData extends AppCompatActivity {
     private Button upload;
     private String filename;
     private String filepath;
+    private String sensor_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class GraphData extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         filename = extras.getString("filename");
         filepath = extras.getString("filepath");
+        sensor_name = extras.getString("sensor_name");
         Log.d("SANITY", "path: " + filepath);
 
         displayData = (Button) findViewById(R.id.button_data);
@@ -129,7 +131,8 @@ public class GraphData extends AppCompatActivity {
     }
     public void writeFile(String file_data) {
         if (isExternalStorageWritable() && checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            File textFile = new File(Environment.getExternalStorageDirectory(), filename);
+            String file_name = sensor_name + "_" + filename;
+            File textFile = new File(Environment.getExternalStorageDirectory(), file_name);
             // Write to external storage file
             FileOutputStream fos = null;
             try {

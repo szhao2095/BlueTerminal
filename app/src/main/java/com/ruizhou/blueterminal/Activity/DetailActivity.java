@@ -67,6 +67,8 @@ public class DetailActivity extends AppCompatActivity {
         responseView.setMovementMethod(new ScrollingMovementMethod());
         ble = MainActivity.ble;
 
+        final String sensor_name = getIntent().getStringExtra("sensor_name");
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -151,7 +153,7 @@ public class DetailActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                openList("data.txt");
+                openList(sensor_name);
 
             }
         });
@@ -251,7 +253,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void openList(String filename) {
         Intent intent = new Intent(this, FileList.class);
-        intent.putExtra("filename", filename);
+        intent.putExtra("sensor_name", filename);
         startActivity(intent);
     }
 

@@ -128,7 +128,7 @@ public class BLE_DevicesAdapter extends RecyclerView.Adapter<BLE_DevicesAdapter.
 //            Utils_functions.toast(context,"currently detail unavaliable");
             //TODO：Adding detail device activity
             Intent intent = new Intent(context, DetailActivity.class);
-//            intent.putExtra("BLE",ble);
+            intent.putExtra("sensor_name", item.getName());
             context.startActivity(intent);
 
 

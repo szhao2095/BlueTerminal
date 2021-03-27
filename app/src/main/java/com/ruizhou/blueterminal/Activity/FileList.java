@@ -37,6 +37,8 @@ public class FileList extends AppCompatActivity {
     private HashMap<String, String> cachedFiles;
     private String[] file_names;
 
+    private String sensor_name;
+
     private LinearLayout layout;
 
 
@@ -52,6 +54,8 @@ public class FileList extends AppCompatActivity {
         context = MainActivity.context;
         read_data = MainActivity.read_data;
         cachedFiles = MainActivity.cachedFiles;
+
+        sensor_name = getIntent().getStringExtra("sensor_name");
 
         // Read filelist.txt file and store file names into file_names list
         FileInputStream fis = null;
@@ -179,6 +183,7 @@ public class FileList extends AppCompatActivity {
         Bundle extras = new Bundle();
         extras.putString("filename", filename);
         extras.putString("filepath", ble.cachedPaths.get(filename));
+        extras.putString("sensor_name", sensor_name);
         intent.putExtras(extras);
         startActivity(intent);
     }
