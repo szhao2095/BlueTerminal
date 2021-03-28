@@ -21,6 +21,7 @@ public class userAuthActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button login;
+    private Button skip;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -54,12 +55,21 @@ public class userAuthActivity extends AppCompatActivity {
             }
         });
 
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(userAuthActivity.this, MainActivity.class);
+                userAuthActivity.this.startActivity(intent);
+            }
+        });
+
     }
 
     private void UISetup(){
         email = (EditText) findViewById(R.id.editTextTextEmailAddress);
         password = (EditText) findViewById(R.id.editTextPassword);
         login = (Button) findViewById(R.id.LoginButton);
+        skip = (Button) findViewById(R.id.SkipButton);
 
     }
 
