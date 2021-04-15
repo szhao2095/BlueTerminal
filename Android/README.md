@@ -1,4 +1,21 @@
 # BlueTerminal  
+This guide is intended to help the people who wants to use the BlueTerminal app or reproducing what we achieves in ECE496. Please note: this project involves BlueTooth Low Energy (BLE), which requires the developer to run the app with an Android phone version 4.3 (API level 18) and higher have built-in platform support for Bluetooth Low Energy (BLE) in the central role.
+## Project setup
+* Project development environment: Android Studio: https://developer.android.com/studio
+* Other related soruces: Firebase: https://firebase.google.com/
+### Libraries Used
+* Fundamental Libraries
+  * [AppCompat](https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat) - Degrade on older versions of Android.
+  * [Data Binding](https://developer.android.com/topic/libraries/data-binding/) - Bind the data to UI component
+  * [Lifecycles](https://developer.android.com/topic/libraries/architecture/lifecycle) - Use for creating an automatically responding lifecycle changes
+  * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - Handle in-app navigation
+  * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Store UI-related data that isn't destroyed on app rotations. Easily schedule asynchronous tasks for optimal execution.
+  * [Fragment](https://developer.android.com/guide/components/fragments) - A basic unit of composable UI.
+  * [Layout](https://developer.android.com/guide/topics/ui/declaring-layout) - Lay out widgets using different algorithms.
+* Core Libraries
+  * [Bluetooth low energy]( https://developer.android.com/guide/topics/connectivity/bluetooth-le) - BLE is designed to provide significantly lower power consumption.
+  * [GraphView](https://github.com/jjoe64/GraphView) - GraphView is a library for Android to programmatically create flexible and nice-looking diagrams. It is easy to understand, to integrate and to customize.
+  * [Firebase](https://firebase.google.com/docs/android/setup) - Major Android phone Cloud provider
 ## Overview of Important Pages  
 ### User Firebase Login Page  
 **Location**: https://github.com/RayZGit/BlueTerminal/blob/master/Android/app/src/main/java/com/ruizhou/blueterminal/Activity/userAuthActivity.java  
